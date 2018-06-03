@@ -1,0 +1,44 @@
+﻿@using UIJCCA.web.Models;
+@{
+    ViewBag.Title = "UIJCCA";
+}
+
+<div class="jumbotron">
+    <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
+    <p>Добавить информацию</p>    
+</div>
+
+<div class="row">    
+    <div class="col-md-8">
+        <section id="editForm">
+            @using (Html.BeginForm("AddIncident", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @*Html.DropDownListFor(m=>m.idObject, Model.idObject, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.idObject, "", new { @class = "text-danger" })*@
+                        @Html.Label("Вид услуги")
+                        <select>
+                            <option value="volvo">ЕКСПД</option>
+                            <option value="saab">Интернет</option>
+                        </select>
+                        <input type="submit" value="Изменить" class="btn btn-default" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @*Html.DropDownListFor(m=>m.idObject, Model.idObject, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.idObject, "", new { @class = "text-danger" })*@
+                        @Html.Label("Вид услуги")
+                        @Html.TextBox("TypesOfService")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Отправить" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>    
+</div>

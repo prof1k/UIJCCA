@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DomainModel.Entity.ICC>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LastMileType.lastMileType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostOffice.idpost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfService.typeOfService)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.internetSpeed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastMileType.lastMileType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostOffice.idpost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfService.typeOfService)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.internetSpeed)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idObject }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idObject }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idObject })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,166 @@
+﻿@using DomainModel.Entity
+@model IEnumerable<Incidents>
+@{
+    ViewBag.Title = "UIJCCA";
+}
+
+<div class="jumbotron">
+    <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
+    <p>Список инцидентов</p>
+</div>
+<script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID инцидента</th>
+                    <th>ID канала связи</th>
+                    <th>Индекс</th>
+                    <th>Наименование ОПС</th>
+                    <th>Дата открытия инцидента</th>
+                    <th>Дата закрытия инцидента</th>
+                    <th>Номер инцидента в Ай-Теко</th>
+                    <th>Номер инцидента в Ростелеком</th>
+                    <th>Описание проблемы</th>
+                    <th>Дата добавления информации</th>
+                    <th></th>                
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row"><a href="~/Views/Home/IncidentDetails.cshtml">@item.idIncident</a></th>
+                        <td>@item.idObject</td>
+                        <td id="ind-@item.idIncident">
+                            
+                        </td>
+                        <td id="po-@item.idIncident">
+                            <script type="text/javascript">
+                                $(function()
+                                {
+                                    getPostOffice(@item.idObject,@item.idIncident);
+                                });
+                            </script>
+
+
+                        </td>
+                        <td id="incidentOpening">@item.incidentOpening.ToShortDateString()</td>
+                        @if (item.IncidentClose == null)
+                        {
+                            <td id="IncidentClose"></td>
+                        }
+                        else
+                        {
+                        <td>@item.IncidentClose.GetValueOrDefault().ToShortDateString()</td>
+                        }
+                        <td>@item.incidentNumberIteko</td>
+                        <td>@item.incidentNumberRT</td>
+                        <td>@item.description</td>
+                        <td>@item.timestamp</td>
+                        @if (item.IncidentClose == null)
+                        {
+                        <td>@Html.ActionLink("Править", "AddIncident", "Home", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                   @*     <td>@Html.ActionLink("Детально", "IncidentDetails", new { id = item.idIncident })</td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {s
+    @Scripts.Render("~/scripts/jquery.validate.min.js")
+    <script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
+    <script type="text/javascript">
+        function getIndexOffice (postOffice,idIncident) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/ApipostOffice/' + postOffice,
+                dataType: 'json',
+                success: function (data) {                   
+                    $('#ind-' + idIncident).append(data.postalCode);                 
+                }
+            });
+
+        };
+        function getPostOffice (idObject,idIncident) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/ApiICC/' + idObject,        
+                dataType: 'json',
+                success: function (data) {                   
+                    $('#po-' + idIncident).append(data.postOffice);
+                    getIndexOffice(data.postOffice,idIncident);                
+                }
+            });
+
+        };
+        
+        $(document).ready(function(){            
+            $('tr').each(function(){
+                $(this).find('#IncidentClose').each(function()
+                {
+                    if ($(this).html() == '') 
+                    {
+                        $(this).parent('tr').find('#incidentOpening').each(function()
+                        {
+                            var dateopen = $(this).html();
+                            var daten = new Date();
+                            var dd = daten.getDate();
+                            var mm = daten.getMonth() + 1; //January is 0!
+                            var yyyy = daten.getFullYear();
+                            var partsdate = dateopen.split('.');
+
+                            dateopen = partsdate[1] + '/' + partsdate[0] + '/' + partsdate[2];
+
+                            if (dd < 10) {
+                                dd = '0' + dd
+                            }
+
+                            if (mm < 10) {
+                                mm = '0' + mm
+                            }
+
+                            daten = mm + '/' + dd + '/' + yyyy;
+
+                            //    var timeDiff = Math.abs(daten - dateopen);
+                            //   var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+                            // MM/DD/YYYY
+                            var date1 = new Date(daten);
+                            var date2 = new Date(dateopen);
+                            var timeDiff = Math.abs(date1.getTime() - date2.getTime());
+                            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                  
+
+                            if (diffDays > 2)
+                            {
+                                $(this).parent('tr').addClass('empty');
+                                return false;
+                            }
+
+                        });
+                    }
+                });
+                
+
+            });
+                 
+            /*$('tr').each(function(){
+                $(this).find('#IncidentClose').each(function(){
+                    if ($(this).html() == '') 
+                    {
+                        $(this).parent('tr').addClass('empty');
+                        return false;
+                    }
+                });
+            });*/
+        })
+             
+</script>
+}

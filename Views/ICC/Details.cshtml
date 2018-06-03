@@ -1,0 +1,50 @@
+﻿@model DomainModel.Entity.ICC
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ICC</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LastMileType.lastMileType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastMileType.lastMileType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostOffice.idpost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostOffice.idpost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfService.typeOfService)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfService.typeOfService)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.internetSpeed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.internetSpeed)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idObject }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

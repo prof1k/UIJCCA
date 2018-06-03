@@ -1,0 +1,84 @@
+﻿@using DomainModel.Entity;
+@model Incidents
+@{
+    ViewBag.Title = "UIJCCA";
+}
+
+<div class="jumbotron">
+    <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
+    <p>Подробная информация</p>
+</div>
+  @*  <div class="jumbotron">
+        <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
+        <p>Детальная информация</p>
+    </div>*@
+<table class="grid">
+    <tr>
+        <td>
+            ID инцидента
+        </td>
+        <td>
+            @Html.Encode(Model.idIncident)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ID канала связи
+        </td>
+        <td>
+            @Html.Encode(Model.idObject)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Дата открытия
+        </td>
+        <td>
+            @Html.Encode(Model.incidentOpening)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Дата закрытия
+        </td>
+        <td>
+            @Html.Encode(Model.IncidentClose)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Номер Айтэко
+        </td>
+        <td>
+            @Html.Encode(Model.incidentNumberIteko)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Номер РТК
+        </td>
+        <td>
+            @Html.Encode(Model.incidentNumberRT)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Описание
+        </td>
+        <td>
+            @Html.Encode(Model.description)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Дата добавления информации
+        </td>
+        <td>
+            @Html.Encode(Model.timestamp)
+        </td>
+    </tr>
+</table>
+        <p>
+            <h3> @Html.ActionLink("Назад к списку", "Index")</h3>
+        </p>
+

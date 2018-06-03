@@ -1,0 +1,195 @@
+﻿@using DomainModel.Entity;
+@model Incidents
+@{
+    ViewBag.Title = "UIJCCA";
+}
+
+<div class="jumbotron">
+    <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
+    <p>Добавить информацию</p>    
+</div>
+
+<div class="row">    
+    <div class="col-md-8">
+        <div id="validError">
+
+        </div>
+        <section id="editForm">
+            @using (Html.BeginForm("AddIncident", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.idIncident, new { @class = "col-md-2 control-label", hidden = "true" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.idObject, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10" id="ObjectList">                        
+                        @*@Html.DropDownListFor(m=>m.idObjectList, Model.idObjectList, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.idObject, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.incidentNumberIteko, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.incidentNumberIteko, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.incidentNumberIteko, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.incidentNumberRT, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.incidentNumberRT, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.incidentNumberRT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.incidentOpening, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                      @*  <input type="date" data-date="" data-date-format="DD MMMM YYYY" id="dateOpen">*@
+    @*Html.TextBoxFor(m => m.incidentOpening, new { @class = "form-control" })*@
+                        @Html.TextBoxFor(m => m.incidentOpening, Model.incidentOpening.ToString("yyyy-MM-dd"), new { @class = "form-control", type="date" })
+                            @Html.ValidationMessageFor(m => m.incidentOpening, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IncidentClose, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.IncidentClose, Model.incidentOpening.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(m => m.IncidentClose, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.description, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(m => m.description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Отправить" class="btn btn-default" id="submitIncident" />
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+        <div class="col-md-4">
+            <h2>Добавить информацию</h2>
+            <p>
+                @Html.TextBox("Data")
+            </p>
+            <p>
+                @Html.TextBox("Data2")
+            </p>
+            <p>
+                @Html.TextBox("Data3")
+            </p>
+            <p>
+                @Html.TextBox("Data4")
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/scripts/jquery.validate.min.js")
+        <script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/ApiICC',
+                    // data: { get_param: 'value' },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#ObjectList').html('');
+                        $('#ObjectList').append('<select class = "form-control" id = "ObjectItems">');
+                        $.each(data, function (index, element) {
+                            $('#ObjectItems').append('<option value="' + element.idObject + '">' + element.postOffice + '(' + element.idObject + ') </option>');
+                        });
+                    }
+                });
+
+            });
+            $('#submitIncident').click(function (evt) {
+                var a = Boolean();
+                a = true;
+
+                $('#validError').html('');
+                evt.preventDefault();
+                if ($('#incidentNumberRT').val().length < 2 || $('#incidentNumberRT').val().length > 10) {
+                    $('#validError').append('Длина должна быть от 2 до 10 символов <br \/>');
+                    a = false;
+                }
+       /*         if ($('#incidentOpening').val().length < 2 || $('#incidentOpening').val().length > 30) {
+                    $('#validError').append('Длина Имени должна быть от 2 до 30 символов <br \/>');
+                    a = false;
+                }*/
+                if ($('#description').val().length < 2 || $('#description').val().length > 300) {
+                    $('#validError').append('Длина Отчества должна быть от 2 до 300 символов <br \/>');
+                    a = false;
+                }
+                /*if ($('#subject').val().length < 3 || $('#subject').val().length > 100) {
+                    $('#validError').append('Длина Предмета должна быть от 3 до 100 символов <br \/>');
+                    a = false;
+                }
+                if ($('#evaluation').val() < 1 || $('#evaluation').val() > 5) {
+                    $('#validError').append('Оценка не может быть меньше 1 и больше 5 <br \/>');
+                    a = false;
+                }*/
+                if (($("#idIncident").val() == 0)) {
+                    if (a) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/ApiIncidents',
+                            data: {
+                                'idIncident': 0,
+                                'idObject': $('#ObjectItems').val(),
+                                'incidentNumberIteko': $('#incidentNumberIteko').val(),
+                                'incidentNumberRT': $('#incidentNumberRT').val(),
+                                'incidentOpening': $('#incidentOpening').val(),
+                                'IncidentClose': $('#IncidentClose').val(),
+                                'description': $('#description').val(),
+                            },
+                            dataType: 'json',
+                            success: function (neww) {
+                                $('#validError').html('Добавлено!');
+                            }
+                        });
+                    }
+                }
+                else {
+                    if (a) {
+                        $.ajax({
+                            type: 'PUT',
+                            url: '/api/ApiIncidents/' + $('#idIncident').val(),
+                            data: {
+                                'idIncident': $('#idIncident').val(),
+                                'idObject': $('#ObjectItems').val(),
+                                'incidentNumberIteko': $('#incidentNumberIteko').val(),
+                                'incidentNumberRT': $('#incidentNumberRT').val(),
+                                'incidentOpening': $('#incidentOpening').val(),
+                                'IncidentClose': $('#IncidentClose').val(),
+                                'description': $('#description').val(),
+                            },
+                            dataType: 'json',
+                            success: function (neww) {
+                                $('#validError').html('Добавлено!');
+                            }
+                        });
+                    }
+                }
+           @*     $("input").on("change", function () {
+                    this.setAttribute(
+                        "data-date",
+                        moment(this.value, "YYYY-MM-DD")
+                        .format(this.getAttribute("data-date-format"))
+                    )
+                }).trigger("change")  *@
+            });          
+        </script>
+    }
+
+
+
+
+

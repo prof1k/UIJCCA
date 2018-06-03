@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DomainModel.Entity.Incidents>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ICC.idtypeOfService)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.incidentOpening)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IncidentClose)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.incidentNumberIteko)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.incidentNumberRT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.timestamp)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ICC.idtypeOfService)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.incidentOpening)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IncidentClose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.incidentNumberIteko)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.incidentNumberRT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.timestamp)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idIncident }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idIncident }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idIncident })
+        </td>
+    </tr>
+}
+
+</table>
