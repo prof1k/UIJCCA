@@ -33,11 +33,11 @@
                                 Управление
                             </button>
                             <div class="dropdown-menu navbar-collapse" aria-labelledby="dropdownMenuButton">
-                                @Html.ActionLink("Управление ОПС", "EditPostOffice", "Home", new { @class = "dropdown-item" })<br />
-                                @Html.ActionLink("Управление Почтамт", "EditPost", "Home", new { @class = "dropdown-item" })<br />
-                                @Html.ActionLink("Управление Канал связи", "EditICC", "Home", new { @class = "dropdown-item" })<br />
-                                @Html.ActionLink("Управление Вид услуги", "EditTypesOfService", "Home", new { @class = "dropdown-item" })<br />
-                                @Html.ActionLink("Управление Тип последней мили", "EditLastMileType", "Home", new { @class = "dropdown-item" })<br />
+                                @Html.ActionLink("Управление ОПС", "EditPostOffice", "Home", new { area = "" }, new { @class = "dropdown-item" })<br />
+                                @Html.ActionLink("Управление Почтамт", "EditPost", "Home", new { area = "" }, new { @class = "dropdown-item" })<br />
+                                @Html.ActionLink("Управление Канал связи", "Index", "ICC", new { area = "" }, new { @class = "dropdown-item" })<br />
+                                @Html.ActionLink("Управление Вид услуги", "EditTypesOfService", "Home", new { area = "" }, new { @class = "dropdown-item" })<br />
+                                @Html.ActionLink("Управление Тип последней мили", "EditLastMileType", "Home", new { area = "" }, new { @class = "dropdown-item" })<br />
                             </div>
                         </div>
                     </li>
