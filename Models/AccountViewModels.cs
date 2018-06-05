@@ -117,4 +117,18 @@ namespace UIJCCA.web.Models
         [Display(Name = "Почта")]
         public string Email { get; set; }
     }
+
+    public class RoleEditViewModel
+    {
+        public ApplicationRole Role { get; set; }
+        public IEnumerable<ApplicationUser> Members { get; set; }
+        public IEnumerable<ApplicationUser> NonMembers { get; set; }
+    }
+    public class RoleModificationViewModel
+    {
+        [Required]
+        public string RoleName { get; set; }
+        public string[] IdsToAdd { get; set; }
+        public string[] IdsToDelete { get; set; }
+    }
 }

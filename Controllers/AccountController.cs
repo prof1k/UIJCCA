@@ -12,6 +12,7 @@ using UIJCCA.web.Models;
 using DomainModel.Manager;
 using DomainModel.Entity;
 using DomainModel.Data;
+using System.Collections.Generic;
 
 namespace UIJCCA.web.Controllers
 {
@@ -22,6 +23,7 @@ namespace UIJCCA.web.Controllers
         private ApplicationUserManager _userManager;
         private readonly GenericManager<Post> GMpost;
         private DataContext db = new DataContext();
+        private ApplicationRoleManager _roleManager;
 
         public AccountController()
         {
@@ -32,6 +34,7 @@ namespace UIJCCA.web.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            GMpost = new GenericManager<Post>(db);
         }
 
         public ApplicationSignInManager SignInManager
@@ -247,6 +250,61 @@ namespace UIJCCA.web.Controllers
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
+        }
+        [AllowAnonymous]
+        public ActionResult UsersList()
+        {
+            return View(UserManager.Users);
+        }
+        public async Task<ActionResult> EditRoleUser(string id)
+        {
+            ApplicationRoleManager RoleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            ApplicationRole role = await RoleManager.FindByIdAsync(id);
+            string[] memberIDs = role.Users.Select(x => x.UserId).ToArray();
+
+            IEnumerable<ApplicationUser> members
+                = UserManager.Users.Where(x => memberIDs.Any(y => y == x.Id));
+
+            IEnumerable<ApplicationUser> nonMembers = UserManager.Users.Except(members);
+
+            return View(new RoleEditViewModel
+            {
+                Role = role,
+                Members = members,
+                NonMembers = nonMembers
+            });
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditRoleUser(RoleModificationViewModel model)
+        {
+            IdentityResult result;
+            if (ModelState.IsValid)
+            {
+                foreach (string userId in model.IdsToAdd ?? new string[] { })
+                {
+                    result = await UserManager.AddToRoleAsync(userId, model.RoleName);
+
+                    if (!result.Succeeded)
+                    {
+                        return View("Error", result.Errors);
+                    }
+                }
+                foreach (string userId in model.IdsToDelete ?? new string[] { })
+                {
+                    result = await UserManager.RemoveFromRoleAsync(userId,
+                    model.RoleName);
+
+                    if (!result.Succeeded)
+                    {
+                        return View("Error", result.Errors);
+                    }
+                }
+                return RedirectToAction("Index","Roles");
+
+            }
+            return View("Error", new string[] { "Роль не найдена" });
         }
 
         //

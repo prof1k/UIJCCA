@@ -1,12 +1,11 @@
-﻿@model IEnumerable<UIJCCA.web.Models.ApplicationRole>
+﻿@model IEnumerable<UIJCCA.web.Models.ApplicationUser>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Роли";
+    ViewBag.Title = "Список пользователей";
 }
-
 <div class="jumbotron">
     <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
-    <p>Список ролей</p>
+    <p>Список пользователей</p>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -18,10 +17,14 @@
                     </th>
                     <th></th>
                     <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tr>
-                    <th>Название</th>
-                    <th>Описание</th>
+                    <th>ID</th>
+                    <th>Логин</th>
+                    <th>Email</th>
+                    <th>Почтамт</th>
                     <th></th>
                 </tr>
             </thead>
@@ -29,12 +32,14 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Description</td>
+                        <td>@item.Id</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>@item.idpost</td>
+                        
                         <td>
                             @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id }) |
-                            @Html.ActionLink("Список пользователей", "EditRoleUser", "Account", new { id = item.Id }, "")
+                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id }) |                            
                         </td>
                     </tr>
                 }
@@ -42,4 +47,6 @@
         </table>
     </div>
 </div>
+
+
 
