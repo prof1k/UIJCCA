@@ -42,18 +42,17 @@ namespace UIJCCA.web.Controllers
         }
         public ActionResult Index()
         {
-            //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            //if ()
-            //createRoles();
             if (Request.IsAuthenticated)
             {
-                return View(repository.GetAll());
+                ApplicationUserManager userManager = HttpContext.GetOwinContext()
+                                                    .GetUserManager<ApplicationUserManager>();
+                if (User.IsInRole("admin")) return View(repository.GetAll());
+                        else return View(repository.FindBy(x => x.ICC.PostOffice.idpost == userManager.FindById(User.Identity.GetUserId()).idpost));
             }
             else
             {
                 return RedirectToAction("Login", "Account");
             }
-            //return View(new IncidentsManager().Read());
         }
         [HttpGet]
         [Authorize]

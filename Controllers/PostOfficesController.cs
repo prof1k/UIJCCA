@@ -8,18 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using DomainModel.Data;
 using DomainModel.Entity;
+using DomainModel.Manager;
 
 namespace UIJCCA.web.Controllers
 {
     public class PostOfficesController : Controller
     {
+        private readonly GenericManager<PostOffice> GM;
         private DataContext db = new DataContext();
 
+        public PostOfficesController()
+        {
+            GM = new GenericManager<PostOffice>(db);
+        }
         // GET: PostOffices
         public ActionResult Index()
         {
-            var postOffice = db.PostOffice.Include(p => p.Post);
-            return View(postOffice.ToList());
+            //var postOffice = db.PostOffice.Include(p => p.Post);
+            return View(GM.GetAll().Include(p=>p.Post));
         }
 
         // GET: PostOffices/Details/5
@@ -29,7 +35,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostOffice postOffice = db.PostOffice.Find(id);
+            PostOffice postOffice = GM.FindBy(x=>x.postOffice == id).FirstOrDefault();
             if (postOffice == null)
             {
                 return HttpNotFound();
@@ -49,17 +55,17 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "postOffice,postalCode,idpost")] PostOffice postOffice)
+        public ActionResult Create([Bind(Include = "postOffice,postalCode,idpost")] PostOffice itempostOffice)
         {
             if (ModelState.IsValid)
             {
-                db.PostOffice.Add(postOffice);
-                db.SaveChanges();
+                GM.Add(itempostOffice);
+                GM.Save();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.idpost = new SelectList(db.Post, "post", "post", postOffice.idpost);
-            return View(postOffice);
+            ViewBag.idpost = new SelectList(db.Post, "post", "post", itempostOffice.idpost);
+            return View(itempostOffice);
         }
 
         // GET: PostOffices/Edit/5
@@ -69,7 +75,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostOffice postOffice = db.PostOffice.Find(id);
+            PostOffice postOffice = GM.FindBy(x=>x.postOffice == id).FirstOrDefault();
             if (postOffice == null)
             {
                 return HttpNotFound();
@@ -83,16 +89,17 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "postOffice,postalCode,idpost")] PostOffice postOffice)
+        public ActionResult Edit([Bind(Include = "postOffice,postalCode,idpost")] PostOffice itempostOffice)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(postOffice).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(itempostOffice).State = EntityState.Modified;
+                GM.Edit(itempostOffice);
+                GM.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.idpost = new SelectList(db.Post, "post", "post", postOffice.idpost);
-            return View(postOffice);
+            ViewBag.idpost = new SelectList(db.Post, "post", "post", itempostOffice.idpost);
+            return View(itempostOffice);
         }
 
         // GET: PostOffices/Delete/5
@@ -102,7 +109,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostOffice postOffice = db.PostOffice.Find(id);
+            PostOffice postOffice = GM.FindBy(x => x.postOffice == id).FirstOrDefault();
             if (postOffice == null)
             {
                 return HttpNotFound();
@@ -115,7 +122,7 @@ namespace UIJCCA.web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            PostOffice postOffice = db.PostOffice.Find(id);
+            PostOffice postOffice = GM.FindBy(x => x.postOffice == id).FirstOrDefault();
             db.PostOffice.Remove(postOffice);
             db.SaveChanges();
             return RedirectToAction("Index");

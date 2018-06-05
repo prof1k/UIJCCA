@@ -8,17 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using DomainModel.Data;
 using DomainModel.Entity;
+using DomainModel.Manager;
 
 namespace UIJCCA.web.Controllers
 {
     public class LastMileTypesController : Controller
     {
+        private readonly GenericManager<LastMileType> GM;
         private DataContext db = new DataContext();
+
+        public LastMileTypesController()
+        {
+            GM = new GenericManager<LastMileType>(db);
+        }
 
         // GET: LastMileTypes
         public ActionResult Index()
         {
-            return View(db.LastMileType.ToList());
+            return View(GM.GetAll());
         }
 
         // GET: LastMileTypes/Details/5
@@ -28,7 +35,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LastMileType lastMileType = db.LastMileType.Find(id);
+            LastMileType lastMileType = GM.FindBy(x=>x.lastMileType == id).FirstOrDefault();
             if (lastMileType == null)
             {
                 return HttpNotFound();
@@ -47,16 +54,16 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "lastMileType")] LastMileType lastMileType)
+        public ActionResult Create([Bind(Include = "lastMileType")] LastMileType itemlastMileType)
         {
             if (ModelState.IsValid)
             {
-                db.LastMileType.Add(lastMileType);
-                db.SaveChanges();
+                GM.Add(itemlastMileType);
+                GM.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(lastMileType);
+            return View(itemlastMileType);
         }
 
         // GET: LastMileTypes/Edit/5
@@ -66,7 +73,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LastMileType lastMileType = db.LastMileType.Find(id);
+            LastMileType lastMileType = GM.FindBy(x=>x.lastMileType == id).FirstOrDefault();
             if (lastMileType == null)
             {
                 return HttpNotFound();
@@ -79,15 +86,16 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "lastMileType")] LastMileType lastMileType)
+        public ActionResult Edit([Bind(Include = "lastMileType")] LastMileType itemlastMileType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(lastMileType).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(itemlastMileType).State = EntityState.Modified;
+                GM.Edit(itemlastMileType);
+                GM.Save();
                 return RedirectToAction("Index");
             }
-            return View(lastMileType);
+            return View(itemlastMileType);
         }
 
         // GET: LastMileTypes/Delete/5
@@ -97,7 +105,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LastMileType lastMileType = db.LastMileType.Find(id);
+            LastMileType lastMileType = GM.FindBy(x=>x.lastMileType == id).FirstOrDefault();
             if (lastMileType == null)
             {
                 return HttpNotFound();
@@ -110,9 +118,9 @@ namespace UIJCCA.web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            LastMileType lastMileType = db.LastMileType.Find(id);
-            db.LastMileType.Remove(lastMileType);
-            db.SaveChanges();
+            LastMileType lastMileType = GM.FindBy(x => x.lastMileType == id).FirstOrDefault();
+            GM.Delete(lastMileType);
+            GM.Save();
             return RedirectToAction("Index");
         }
 

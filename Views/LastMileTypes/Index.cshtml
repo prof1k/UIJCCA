@@ -1,27 +1,34 @@
 ﻿@model IEnumerable<DomainModel.Entity.LastMileType>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Последняя миля";
 }
 
-<h2>Index</h2>
+<h2>Последняя миля</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.lastMileType }) |
-            @Html.ActionLink("Details", "Details", new { id=item.lastMileType }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.lastMileType })
-        </td>
-    </tr>
-}
-
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.lastMileType)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastMileType)
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.lastMileType }) |
+                    @Html.ActionLink("Детально", "Details", new { id = item.lastMileType }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.lastMileType })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
