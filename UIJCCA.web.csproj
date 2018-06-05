@@ -214,6 +214,7 @@
     <Compile Include="Controllers\ApiICCController.cs" />
     <Compile Include="Controllers\ApiIncidentsController.cs" />
     <Compile Include="Controllers\ApiPostOfficeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ICCController.cs" />
     <Compile Include="Controllers\IncidentsController.cs" />
@@ -367,9 +368,13 @@
     <Content Include="Views\TypeOfService\Details.cshtml" />
     <Content Include="Views\TypeOfService\Edit.cshtml" />
     <Content Include="Views\TypeOfService\Index.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ApplicationRoleManager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
