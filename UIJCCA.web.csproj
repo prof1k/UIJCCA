@@ -45,11 +45,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\DomainModel\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\DomainModel\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -221,7 +221,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostOfficesController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
-    <Compile Include="Controllers\TypeOfServicesController.cs" />
+    <Compile Include="Controllers\TypeOfServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -256,7 +256,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
-    <Compile Include="Models\ApplicationManager.cs" />
     <Compile Include="Models\ApplicationRoleManager.cs" />
     <Compile Include="Models\ApplicationRoleModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -348,11 +347,6 @@
     <Content Include="Views\Posts\Details.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
-    <Content Include="Views\TypeOfServices\Create.cshtml" />
-    <Content Include="Views\TypeOfServices\Delete.cshtml" />
-    <Content Include="Views\TypeOfServices\Details.cshtml" />
-    <Content Include="Views\TypeOfServices\Edit.cshtml" />
-    <Content Include="Views\TypeOfServices\Index.cshtml" />
     <Content Include="Views\LastMileTypes\Create.cshtml" />
     <Content Include="Views\LastMileTypes\Delete.cshtml" />
     <Content Include="Views\LastMileTypes\Details.cshtml" />
@@ -368,6 +362,11 @@
     <Content Include="Views\PostOffices\Details.cshtml" />
     <Content Include="Views\PostOffices\Edit.cshtml" />
     <Content Include="Views\PostOffices\Index.cshtml" />
+    <Content Include="Views\TypeOfService\Create.cshtml" />
+    <Content Include="Views\TypeOfService\Delete.cshtml" />
+    <Content Include="Views\TypeOfService\Details.cshtml" />
+    <Content Include="Views\TypeOfService\Edit.cshtml" />
+    <Content Include="Views\TypeOfService\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

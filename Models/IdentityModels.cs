@@ -42,7 +42,7 @@ namespace UIJCCA.web.Models
             return new ApplicationDbContext();
         }
 
-        //public System.Data.Entity.DbSet<UIJCCA.web.Models.ApplicationRole> IdentityRoles { get; set; }
+        public System.Data.Entity.DbSet<UIJCCA.web.Models.ApplicationRole> IdentityRoles { get; set; }
 
         //public System.Data.Entity.DbSet<DomainModel.Entity.Post> Posts { get; set; }
 
