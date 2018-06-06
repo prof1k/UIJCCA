@@ -16,6 +16,8 @@ namespace UIJCCA.web.Controllers
     {
         private readonly GenericManager<Incidents> repository;
         private readonly GenericManager<Post> postRepository;
+        private readonly GenericManager<PostOffice> postOfficeRepository;
+        private readonly GenericManager<ICC> ICCRepository;
         private DataContext db = new DataContext();
         /*private void createRoles()
         {
@@ -38,6 +40,8 @@ namespace UIJCCA.web.Controllers
         {
             repository = new GenericManager<Incidents>(db);
             postRepository = new GenericManager<Post>(db);
+            postOfficeRepository = new GenericManager<PostOffice>(db);
+            ICCRepository = new GenericManager<ICC>(db);
 
         }
         public ActionResult Index()
@@ -46,8 +50,15 @@ namespace UIJCCA.web.Controllers
             {
                 ApplicationUserManager userManager = HttpContext.GetOwinContext()
                                                     .GetUserManager<ApplicationUserManager>();
+                userManager.GetEmail(User.Identity.GetUserId().ToString());
                 if (User.IsInRole("admin")) return View(repository.GetAll());
-                        else return View(repository.FindBy(x => x.ICC.PostOffice.idpost == userManager.FindById(User.Identity.GetUserId().ToString()).idpost));
+                else
+                {
+                    var user = userManager.FindById(User.Identity.GetUserId().ToString());
+                    var incidents = db.Incidents.Include("ICC").Include("ICC.PostOffice");
+                    //return View(repository.FindBy(x => x.ICC.PostOffice.idpost == userManager.FindById(User.Identity.GetUserId().ToString()).idpost));
+                    return View(incidents.ToArray().Where(x=>x.ICC.PostOffice.idpost == user.idpost));
+                }
             }
             else
             {
