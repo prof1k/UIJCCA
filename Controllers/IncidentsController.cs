@@ -8,17 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using DomainModel.Data;
 using DomainModel.Entity;
+using DomainModel.Manager;
 
 namespace UIJCCA.web.Controllers
 {
     public class IncidentsController : Controller
     {
         private DataContext db = new DataContext();
+        private readonly GenericManager<Incidents> GM;
 
+        public IncidentsController()
+        {
+            GM = new GenericManager<Incidents>(db);
+        }
         // GET: Incidents
         public ActionResult Index()
         {
-            var incidents = db.Incidents.Include(i => i.ICC);
+            //var incidents = db.Incidents.Include(i => i.ICC);
+            var incidents = GM.GetAll().Include(i => i.ICC);
             return View(incidents.ToList());
         }
 
@@ -29,7 +36,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Incidents incidents = db.Incidents.Find(id);
+            Incidents incidents = GM.FindBy(x=>x.idIncident == id).FirstOrDefault();
             if (incidents == null)
             {
                 return HttpNotFound();
@@ -40,7 +47,7 @@ namespace UIJCCA.web.Controllers
         // GET: Incidents/Create
         public ActionResult Create()
         {
-            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idtypeOfService");
+            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idpostOffice"); // idtypeOfService
             return View();
         }
 
@@ -53,12 +60,12 @@ namespace UIJCCA.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Incidents.Add(incidents);
-                db.SaveChanges();
+                GM.Add(incidents);
+                GM.Save();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idtypeOfService", incidents.idObject);
+            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idpostOffice", incidents.idObject);
             return View(incidents);
         }
 
@@ -69,12 +76,12 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Incidents incidents = db.Incidents.Find(id);
+            Incidents incidents = GM.FindBy(x=>x.idIncident == id).FirstOrDefault();
             if (incidents == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idtypeOfService", incidents.idObject);
+            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idpostOffice", incidents.idObject);
             return View(incidents);
         }
 
@@ -87,11 +94,12 @@ namespace UIJCCA.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(incidents).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(incidents).State = EntityState.Modified;
+                GM.Edit(incidents);
+                GM.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idtypeOfService", incidents.idObject);
+            ViewBag.idObject = new SelectList(db.ICC, "idObject", "idpostOffice", incidents.idObject);
             return View(incidents);
         }
 
@@ -102,7 +110,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Incidents incidents = db.Incidents.Find(id);
+            Incidents incidents = GM.FindBy(x=>x.idIncident == id).FirstOrDefault();
             if (incidents == null)
             {
                 return HttpNotFound();
@@ -115,7 +123,7 @@ namespace UIJCCA.web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Incidents incidents = db.Incidents.Find(id);
+            Incidents incidents = GM.FindBy(x=>x.idIncident == id).FirstOrDefault();
             db.Incidents.Remove(incidents);
             db.SaveChanges();
             return RedirectToAction("Index");
