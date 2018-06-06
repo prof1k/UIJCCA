@@ -34,15 +34,16 @@
                         <th scope="row"><a href="~/Views/Home/IncidentDetails.cshtml">@item.idIncident</a></th>
                         <td>@item.idObject</td>
                         <td id="ind-@item.idIncident">
-                            
+                            @item.ICC.PostOffice.postalCode
                         </td>
                         <td id="po-@item.idIncident">
-                            <script type="text/javascript">
-                                $(function()
-                                {
-                                    getPostOffice(@item.idObject,@item.idIncident);
-                                });
-                            </script>
+                            @item.ICC.idpostOffice
+                            @*<script type="text/javascript">
+        $(function()
+        {
+            getPostOffice(@item.idObject,@item.idIncident);
+        });
+    </script>*@
 
 
                         </td>

@@ -51,7 +51,8 @@ namespace UIJCCA.web.Controllers
                 ApplicationUserManager userManager = HttpContext.GetOwinContext()
                                                     .GetUserManager<ApplicationUserManager>();
                 userManager.GetEmail(User.Identity.GetUserId().ToString());
-                if (User.IsInRole("admin")) return View(repository.GetAll());
+                //if (User.IsInRole("admin")) return View(repository.GetAll());
+                if (User.IsInRole("admin")) return View(db.Incidents.Include("ICC").Include("ICC.PostOffice"));
                 else
                 {
                     var user = userManager.FindById(User.Identity.GetUserId().ToString());

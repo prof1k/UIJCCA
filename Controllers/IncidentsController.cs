@@ -62,7 +62,7 @@ namespace UIJCCA.web.Controllers
             {
                 GM.Add(incidents);
                 GM.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             ViewBag.idObject = new SelectList(db.ICC, "idObject", "idpostOffice", incidents.idObject);
@@ -97,7 +97,7 @@ namespace UIJCCA.web.Controllers
                 //db.Entry(incidents).State = EntityState.Modified;
                 GM.Edit(incidents);
                 GM.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Home", "Index");
             }
             ViewBag.idObject = new SelectList(db.ICC, "idObject", "idpostOffice", incidents.idObject);
             return View(incidents);
