@@ -47,7 +47,7 @@ namespace UIJCCA.web.Controllers
                 ApplicationUserManager userManager = HttpContext.GetOwinContext()
                                                     .GetUserManager<ApplicationUserManager>();
                 if (User.IsInRole("admin")) return View(repository.GetAll());
-                        else return View(repository.FindBy(x => x.ICC.PostOffice.idpost == userManager.FindById(User.Identity.GetUserId()).idpost));
+                        else return View(repository.FindBy(x => x.ICC.PostOffice.idpost == userManager.FindById(User.Identity.GetUserId().ToString()).idpost));
             }
             else
             {
