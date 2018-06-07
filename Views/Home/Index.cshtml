@@ -62,11 +62,17 @@
                         <td>@item.timestamp</td>
                         @if (item.IncidentClose == null)
                         {
-                        <td>@Html.ActionLink("Править", "AddIncident", "Home", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })</td>
+                        <td>@Html.ActionLink("Править", "Edit", "Incidents", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })</td>
                         }
                         else
                         {
                             <td></td>
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <td>
+                                @Html.ActionLink("Удалить", "Delete", "Incidents", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })
+                            </td>
                         }
                    @*     <td>@Html.ActionLink("Детально", "IncidentDetails", new { id = item.idIncident })</td>*@
                     </tr>
