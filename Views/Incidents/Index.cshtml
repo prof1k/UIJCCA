@@ -5,11 +5,11 @@
 }
 
 <div class="jumbotron">
-    <h2>Единый информационный журнал заявок каналов связи ФГУП "Почта России"</h2>
+    <h2>Единый информационный журнал заявок каналов связи УФПС Томской области</h2>
     <p>Список инцидентов</p>
 </div>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить новый инцидент", "Create")
 </p>
 <script src='@Url.Content("~/Scripts/jquery-3.3.1.js")' type="text/javascript"></script>
 <div class="row">
@@ -67,9 +67,9 @@
                             @Html.DisplayFor(modelItem => item.timestamp)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.idIncident }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.idIncident }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.idIncident })
+                            @Html.ActionLink("Редактировать", "Edit", new { id = item.idIncident }) |
+                            @Html.ActionLink("Детально", "Details", new { id = item.idIncident }) |
+                            @Html.ActionLink("Удалить", "Delete", new { id = item.idIncident })
                         </td>
                     </tr>
                 }

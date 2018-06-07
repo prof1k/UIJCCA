@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DomainModel.Entity.PostOffice>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Почтамты";
 }
 
-<h2>Index</h2>
+<h2>Почтамты</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить новый", "Create")
 </p>
 <table class="table">
     <tr>
@@ -29,9 +29,9 @@
             @Html.DisplayFor(modelItem => item.postalCode)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.postOffice }) |
-            @Html.ActionLink("Details", "Details", new { id=item.postOffice }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.postOffice })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.postOffice }) |
+            @Html.ActionLink("Детально", "Details", new { id=item.postOffice }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.postOffice })
         </td>
     </tr>
 }

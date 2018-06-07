@@ -1,10 +1,10 @@
 ﻿@model DomainModel.Entity.LastMileType
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактировать Тип последней мили";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать Тип последней мили</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>LastMileType</h4>
+        <h4>Тип последней мили</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.lastMileType)
@@ -26,7 +26,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку", "Index")
 </div>
 
 @section Scripts {

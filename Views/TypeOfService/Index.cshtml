@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DomainModel.Entity.TypeOfService>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Вид услуги";
 }
 
-<h2>Index</h2>
+<h2>Вид услуги</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить новый", "Create")
 </p>
 <table class="table">
     <tr>
@@ -17,9 +17,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.typeOfService }) |
-            @Html.ActionLink("Details", "Details", new { id=item.typeOfService }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.typeOfService })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.typeOfService }) |
+            @Html.ActionLink("Детально", "Details", new { id=item.typeOfService }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.typeOfService })
         </td>
     </tr>
 }

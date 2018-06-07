@@ -1,10 +1,10 @@
 ﻿@model DomainModel.Entity.TypeOfService
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактировать Вид услуги";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать Вид услуги</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TypeOfService</h4>
+        <h4>Вид услуги</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.typeOfService)
@@ -26,7 +26,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку", "Index")
 </div>
 
 @section Scripts {

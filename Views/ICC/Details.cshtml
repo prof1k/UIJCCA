@@ -1,13 +1,13 @@
 ﻿@model DomainModel.Entity.ICC
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Детальная информация";
 }
 
-<h2>Details</h2>
+<h2>Детальная информация</h2>
 
 <div>
-    <h4>ICC</h4>
+    <h4>Каналы связи</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -45,6 +45,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.idObject }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.idObject }) |
+    @Html.ActionLink("Вернуться к списку", "Index")
 </p>

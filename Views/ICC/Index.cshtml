@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DomainModel.Entity.ICC>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Каналы связи";
 }
 
-<h2>Index</h2>
+<h2>Каналы связи</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить новый", "Create")
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PostOffice.idpost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostOffice.Post.post)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TypeOfService.typeOfService)
@@ -34,6 +37,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.PostOffice.idpost)
         </td>
+        <th>
+            @Html.DisplayNameFor(model => model.PostOffice.Post.post)
+        </th>
         <td>
             @Html.DisplayFor(modelItem => item.TypeOfService.typeOfService)
         </td>
@@ -41,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.internetSpeed)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idObject }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idObject }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idObject })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.idObject }) |
+            @Html.ActionLink("Детально", "Details", new { id=item.idObject }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.idObject })
         </td>
     </tr>
 }

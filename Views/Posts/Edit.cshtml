@@ -1,10 +1,10 @@
 ﻿@model DomainModel.Entity.Post
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактировать ОПС";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать ОПС</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Post</h4>
+        <h4>Отделения почтовой связи</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.post)
@@ -26,7 +26,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку", "Index")
 </div>
 
 @section Scripts {
