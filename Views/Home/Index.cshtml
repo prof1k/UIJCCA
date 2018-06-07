@@ -15,7 +15,6 @@
             <thead>
                 <tr>
                     <th>ID инцидента</th>
-                    <th>ID канала связи</th>
                     <th>Индекс</th>
                     <th>Наименование ОПС</th>
                     <th>Дата открытия инцидента</th>
@@ -31,8 +30,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <th scope="row"><a href="~/Views/Home/IncidentDetails.cshtml">@item.idIncident</a></th>
-                        <td>@item.idObject</td>
+                        <th scope="row"><a href="@Url.Action("Details","Incidents",routeValues: new { id = item.idIncident })">@item.idIncident</a></th>
                         <td id="ind-@item.idIncident">
                             @item.ICC.PostOffice.postalCode
                         </td>
@@ -62,11 +60,17 @@
                         <td>@item.timestamp</td>
                         @if (item.IncidentClose == null)
                         {
-                        <td>@Html.ActionLink("Править", "AddIncident", "Home", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })</td>
+                        <td>@Html.ActionLink("Править", "Edit", "Incidents", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })</td>
                         }
                         else
                         {
                             <td></td>
+                        }
+                        @if (Request.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <td>
+                                @Html.ActionLink("Удалить", "Delete", "Incidents", routeValues: new { id = item.idIncident }, htmlAttributes: new { id = item.idIncident })
+                            </td>
                         }
                    @*     <td>@Html.ActionLink("Детально", "IncidentDetails", new { id = item.idIncident })</td>*@
                     </tr>
