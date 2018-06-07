@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DomainModel.Entity.Post>
 
 @{
-    ViewBag.Title = "Отделения почтовой связи";
+    ViewBag.Title = "Почтамты";
 }
 
-<h2>Отделения почтовой связи</h2>
+<h2>Почтамты</h2>
 
 <p>
-    @Html.ActionLink("Добавить новое", "Create")
+    @Html.ActionLink("Добавить новый", "Create")
 </p>
 <table class="table">
     <thead>
@@ -24,9 +24,9 @@
                     @Html.DisplayFor(modelItem => item.post)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.post }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.post }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.post })
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.post }) |
+                    @Html.ActionLink("Детально", "Details", new { id = item.post }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.post })
                 </td>
             </tr>
         }

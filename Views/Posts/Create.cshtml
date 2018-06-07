@@ -1,10 +1,10 @@
 ﻿@model DomainModel.Entity.Post
 
 @{
-    ViewBag.Title = "Добавить ОПС";
+    ViewBag.Title = "Добавить Почтамт";
 }
 
-<h2>Добавить ОПС</h2>
+<h2>Добавить Почтамт</h2>
 
 <section id="editForm">
     @using (Html.BeginForm())
@@ -12,7 +12,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Отделения почтовой связи</h4>
+            <h4>Почтамты</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
