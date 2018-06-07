@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.postalCode)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.postOffice)
         </th>
         <th></th>
     </tr>
@@ -27,6 +30,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.postalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.postOffice)
         </td>
         <td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.postOffice }) |

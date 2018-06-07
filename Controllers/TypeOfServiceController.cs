@@ -8,17 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using DomainModel.Data;
 using DomainModel.Entity;
+using DomainModel.Manager;
 
 namespace UIJCCA.web.Controllers
 {
     public class TypeOfServiceController : Controller
     {
+        private readonly GenericManager<TypeOfService> GM;
         private DataContext db = new DataContext();
+        public TypeOfServiceController()
+        {
+            GM = new GenericManager<TypeOfService>(db);
+        }
 
         // GET: TypeOfService
         public ActionResult Index()
         {
-            return View(db.TypeOfService.ToList());
+            return View(GM.GetAll());
         }
 
         // GET: TypeOfService/Details/5
@@ -28,7 +34,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeOfService typeOfService = db.TypeOfService.Find(id);
+            TypeOfService typeOfService = GM.FindBy(x=>x.typeOfService == id).FirstOrDefault();
             if (typeOfService == null)
             {
                 return HttpNotFound();
@@ -47,16 +53,16 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "typeOfService")] TypeOfService typeOfService)
+        public ActionResult Create([Bind(Include = "typeOfService")] TypeOfService itemtypeOfService)
         {
             if (ModelState.IsValid)
             {
-                db.TypeOfService.Add(typeOfService);
-                db.SaveChanges();
+                GM.Add(itemtypeOfService);
+                GM.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(typeOfService);
+            return View(itemtypeOfService);
         }
 
         // GET: TypeOfService/Edit/5
@@ -66,7 +72,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeOfService typeOfService = db.TypeOfService.Find(id);
+            TypeOfService typeOfService = GM.FindBy(x=>x.typeOfService == id).FirstOrDefault();
             if (typeOfService == null)
             {
                 return HttpNotFound();
@@ -79,15 +85,15 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "typeOfService")] TypeOfService typeOfService)
+        public ActionResult Edit([Bind(Include = "typeOfService")] TypeOfService itemtypeOfService)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(typeOfService).State = EntityState.Modified;
-                db.SaveChanges();
+                GM.Add(itemtypeOfService);
+                GM.Save();
                 return RedirectToAction("Index");
             }
-            return View(typeOfService);
+            return View(itemtypeOfService);
         }
 
         // GET: TypeOfService/Delete/5
@@ -97,7 +103,7 @@ namespace UIJCCA.web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeOfService typeOfService = db.TypeOfService.Find(id);
+            TypeOfService typeOfService = GM.FindBy(x => x.typeOfService == id).FirstOrDefault();
             if (typeOfService == null)
             {
                 return HttpNotFound();
@@ -110,9 +116,9 @@ namespace UIJCCA.web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            TypeOfService typeOfService = db.TypeOfService.Find(id);
-            db.TypeOfService.Remove(typeOfService);
-            db.SaveChanges();
+            TypeOfService typeOfService = GM.FindBy(x => x.typeOfService == id).FirstOrDefault();
+            GM.Delete(typeOfService);
+            GM.Save();
             return RedirectToAction("Index");
         }
 
