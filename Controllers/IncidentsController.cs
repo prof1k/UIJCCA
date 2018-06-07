@@ -56,10 +56,11 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idIncident,idObject,incidentOpening,IncidentClose,incidentNumberIteko,incidentNumberRT,description,timestamp")] Incidents incidents)
+        public ActionResult Create([Bind(Include = "idIncident,idObject,incidentOpening,IncidentClose,incidentNumberIteko,incidentNumberRT,description")] Incidents incidents)
         {
             if (ModelState.IsValid)
             {
+                incidents.timestamp = DateTime.Now;
                 GM.Add(incidents);
                 GM.Save();
                 return RedirectToAction("Index","Home");
@@ -90,7 +91,7 @@ namespace UIJCCA.web.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idIncident,idObject,incidentOpening,IncidentClose,incidentNumberIteko,incidentNumberRT,description,timestamp")] Incidents incidents)
+        public ActionResult Edit([Bind(Include = "idIncident,idObject,incidentOpening,IncidentClose,incidentNumberIteko,incidentNumberRT,description")] Incidents incidents)
         {
             if (ModelState.IsValid)
             {
