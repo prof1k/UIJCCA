@@ -41,7 +41,7 @@ namespace UIJCCA.web.Controllers
         public ActionResult Create()
         {
             ViewBag.idlastMileType = new SelectList(db.LastMileType, "lastMileType", "lastMileType");
-            ViewBag.idpostOffice = new SelectList(db.PostOffice, "postOffice", "idpost");
+            ViewBag.idpostOffice = new SelectList(db.PostOffice, "postOffice", "postOffice");
             ViewBag.idtypeOfService = new SelectList(db.TypeOfService, "typeOfService", "typeOfService");
             return View();
         }
@@ -61,7 +61,7 @@ namespace UIJCCA.web.Controllers
             }
 
             ViewBag.idlastMileType = new SelectList(db.LastMileType, "lastMileType", "lastMileType", iCC.idlastMileType);
-            ViewBag.idpostOffice = new SelectList(db.PostOffice, "postOffice", "idpost", iCC.idpostOffice);
+            ViewBag.idpostOffice = new SelectList(db.PostOffice, "postOffice", "postOffice", iCC.idpostOffice);
             ViewBag.idtypeOfService = new SelectList(db.TypeOfService, "typeOfService", "typeOfService", iCC.idtypeOfService);
             return View(iCC);
         }
